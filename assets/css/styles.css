@@ -1,0 +1,27 @@
+h1{
+    text-align: center;
+    padding-bottom: 30px;
+}
+h2{
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    padding: 12px 16px 0;
+}
+p{
+    font-size: 14px !important;
+    padding: 4px 16px 12px;
+}
+
+.container{
+    padding: 100px 0;
+}
+.note{
+    padding: 8px !important;
+}
+.note > div{
+    border: 1px #E0E0E0 solid;
+    border-radius: 5px;
+}
+.note .active{
+    background-color: #E0E0E0;
+}
