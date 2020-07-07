@@ -4,8 +4,9 @@ Vue.component('note', {
     template: `
         <div class="col-lg-3 col-md-6 note">
             <div class="note-wrapper" data-toggle="modal" :data-target="targetId">
-                <h2>{{info.title}}</h2>
-                <p>{{info.contents}}</p>
+                <h3 v-if="!info.title && !info.contents">Empty note</h3>
+                <h2 v-if="info.title">{{info.title}}</h2>
+                <p v-if="info.contents" v-bind:style="[(!info.title) ? {'padding-top': '12px'} : {'padding-top': '0px'}]">{{info.contents}}</p>
             </div>
             <div :id="id" class="modal fade" tabindex="-1" role="dialog"
                 :aria-labelledby="ariaId" aria-hidden="true">
@@ -72,6 +73,13 @@ var app = new Vue({
         createNote(){
             const newNote = {title: "", contents: ""};
             this.notes.push(newNote);
+        }
+    },
+    created(){
+        for (var i=0; i<this.notes.length; i++){
+            if (notes[i].title === "" && notes[i].contents === ""){
+                notes.splice(i, 1);
+            }
         }
     }
 })

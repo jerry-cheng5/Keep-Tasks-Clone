@@ -5,11 +5,19 @@ h1{
 h2{
     font-size: 16px !important;
     font-weight: 600 !important;
-    padding: 12px 16px 0;
+    padding: 12px 16px 12px;
+    margin: 0 !important;
+}
+h3{
+    font-size: 22px !important;
+    color: #80868B;
+    padding: 30px 15px;
+    font-weight: 400 !important;
 }
 p{
     font-size: 14px !important;
-    padding: 4px 16px 12px;
+    padding: 0px 16px 12px;
+    margin: 0 !important;
 }
 button{
     outline: none !important;
