@@ -11,17 +11,66 @@ p{
     font-size: 14px !important;
     padding: 4px 16px 12px;
 }
+button{
+    outline: none !important;
+}
 
 .container{
     padding: 100px 0;
 }
 .note{
     padding: 8px !important;
+    word-wrap: break-word;
 }
-.note > div{
+.note .note-wrapper{
     border: 1px #E0E0E0 solid;
-    border-radius: 5px;
+    border-radius: 8px;
+    height: 100%;
 }
-.note .active{
-    background-color: #E0E0E0;
+.note .note-wrapper:hover{
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+/* Modal */
+.modal{
+    background-color: rgba(229, 229, 229, 0.1);
+}
+@media (min-width: 576px){
+    .modal .modal-dialog {
+        max-width: 600px;
+        margin: 1.75rem auto;
+    }
+}
+.modal .modal-content{
+    border: none;
+    border-radius: 8px;
+    min-height: 300px;
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.1);
+}
+.modal .modal-header{
+    padding: 16px 0 0 0;
+    border: 0;
+}
+.modal input{
+    font-size: 22px !important;
+    font-weight: 400 !important;
+    padding: 0 15px 12px;
+    width: 100%;
+    border: none;
+    outline: none;
+}
+.modal .modal-body{
+    padding: 0;
+    border: 0;
+    position: relative;
+}
+.modal textarea{
+    font-size: 16px !important;
+    padding: 4px 16px 12px;
+    width: 100%;
+    min-height: 200px;
+    border: none;
+    outline: none;
+    resize: none;
 }
