@@ -27,15 +27,10 @@
 </head>
 
 <body>
-    <div class="container" id="app">
-        <h1>Notes</h1>
-        <button @click="createNote" class="btn btn-primary">New Note</button>
-        <div class="notes">
-            <p v-if="!notes.length">No notes saved.</p>
-            <div v-if="notes.length" class="row">
-                <note v-for="note in notes" :info="note"></note>
-            </div>
-        </div>
+    <div id="app">
+        <notes></notes>
+    </div>
+        
         
 
 
@@ -79,7 +74,6 @@
                 </div>
             </div>
         </div> -->
-    </div>
 
     <!-- Vendor JS Files -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
