@@ -1,3 +1,4 @@
+
 h1{
     text-align: center;
     margin: 0 !important;
@@ -42,6 +43,7 @@ button{
     margin: bottom;
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.2);
     overflow: hidden;
+    background-color: white;
 }
 .new-note input{
     font-size: 1rem !important;
