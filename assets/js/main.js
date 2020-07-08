@@ -1,7 +1,7 @@
 //Functions
 function uuidv4() {
-    return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
-      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+        (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
     );
 }
 
@@ -14,31 +14,48 @@ Vue.component('notes', {
             <div class="notes">
                 <p v-if="!notes.length" class="no-notes">Notes you add appear here</p>
                 <div v-if="notes.length" class="row">
-                    <note v-for="note in notes" :key="note.id" :info="note" @delete-note="deleteNote"></note>
+                    <note v-for="note in notes" :key="note.id" :info="note" @delete-note="deleteNote" @update-note="updateExistingNote"></note>
                 </div>
             </div>
         </div>
     `,
     data() {
         return {
-            notes: [
-                {
-                    title: "ieowjiof",
-                    contents: "jwioejfowe",
-                    id: 'n' + uuidv4()
-                }
-            ],
+            notes: [],
             currentNote: null
         }
     },
+    mounted(){
+        firebase.database().ref().once('value', (notes) => {
+            notes.forEach((note) => {
+                this.notes.push({
+                    id: note.child('id').val(),
+                    title: note.child('title').val(),
+                    contents: note.child('contents').val()
+                })
+            })
+        })
+    },
     methods: {
-        createNote(info){
-            const newNote = {title: info.title, contents: info.contents, id: info.id};
+        createNote(info) {
+            const newNote = { title: info.title, contents: info.contents, id: info.id };
             this.notes.push(newNote);
+            firebase.database().ref(info.id).set({
+                title: info.title,
+                contents: info.contents,
+                id: info.id
+            });
         },
-        deleteNote(info){
-            this.notes = this.notes.filter(function(value){return value != info})
-            
+        deleteNote(info) {
+            this.notes = this.notes.filter(function (value) { return value != info })
+            firebase.database().ref(info.id).remove()
+        },
+        updateExistingNote(info) {
+            firebase.database().ref(info.id).update({
+                title: info.title,
+                contents: info.contents,
+                id: info.id
+            })
         }
     }
 })
@@ -53,7 +70,7 @@ Vue.component('note', {
                 <h2 v-if="info.title">{{info.title}}</h2>
                 <p v-if="info.contents" v-bind:style="[(!info.title) ? {'padding-top': '12px'} : {'padding-top': '0px'}]">{{info.contents}}</p>
             </div>
-            <div :id="info.id" class="modal fade" tabindex="-1" role="dialog"
+            <div :id="info.id" class="modal fade" tabindex="-1" role="dialog" @click="updateNote"
                 :aria-labelledby="ariaId" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -65,33 +82,36 @@ Vue.component('note', {
                         </div>
                         <div class="footer">
                             <button @click="deleteNote" class="delete-button" data-dismiss="modal" aria-label="Close"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                            <button class="close-button" data-dismiss="modal" aria-label="Close">Close</button>
+                            <button @click="updateNote" class="close-button" data-dismiss="modal" aria-label="Close">Close</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     `,
-    data () {
+    data() {
         return {
-          ariaId: null,
-          targetId: null,
-          hovered: false
+            ariaId: null,
+            targetId: null,
+            hovered: false
         }
-    }, 
-    mounted () {
+    },
+    mounted() {
         this.ariaId = this.info.id + 'Label'
         this.targetId = '#' + this.info.id
     },
     methods: {
-        deleteNote(){
+        deleteNote() {
             this.$emit('delete-note', this.info)
+        },
+        updateNote() {
+            this.$emit('update-note', this.info)
         }
     }
 })
 
 Vue.component('new-note', {
-    template:`
+    template: `
         <div class="new-note">
             <input v-model="note.title" @mousedown="editingTitle=true" @blur="editingTitle=false; newNote()" v-if="(editingNote || editingTitle)" placeholder="Title">
             <textarea v-model="note.contents" @mousedown="editingNote=true" @blur="editingNote=false; newNote()" v-bind:style="[(!editingNote && !editingTitle) ? {'font-size': '1rem !important', 'font-weight': '600 !important'} : {'font-size': '0.875rem !important', 'font-weight': '400 !important'}]" placeholder="Take a note..."></textarea>
@@ -100,8 +120,8 @@ Vue.component('new-note', {
             </div>
         </div>
     `,
-    data(){
-        return{
+    data() {
+        return {
             note: {
                 title: "",
                 contents: "",
@@ -112,8 +132,8 @@ Vue.component('new-note', {
         }
     },
     methods: {
-        newNote(){
-            if (!this.editingTitle && !this.editingNote && (this.note.title || this.note.contents)){
+        newNote() {
+            if (!this.editingTitle && !this.editingNote && (this.note.title || this.note.contents)) {
                 this.$emit('create-note', this.note)
                 this.note.title = ""
                 this.note.contents = ""
@@ -125,7 +145,10 @@ Vue.component('new-note', {
 
 //Vue Instance
 var app = new Vue({
-    el: '#app'
+    el: '#app',
+    data: {
+        notes: []
+    },
 })
 
 

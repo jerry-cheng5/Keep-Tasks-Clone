@@ -24,6 +24,34 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
+    <!-- Firebase -->
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyD-H2ILrYDJC1k1xfXiipoiXOA9ue9GV0U",
+            authDomain: "keep-and-tasks-clone.firebaseapp.com",
+            databaseURL: "https://keep-and-tasks-clone.firebaseio.com",
+            projectId: "keep-and-tasks-clone",
+            storageBucket: "keep-and-tasks-clone.appspot.com",
+            messagingSenderId: "558645412361",
+            appId: "1:558645412361:web:e426c94bd46e5e8374eed8",
+            measurementId: "G-J6Y6J2EZ50"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        var database = firebase.database();
+    </script>
+
 </head>
 
 <body>
@@ -32,7 +60,7 @@
             <notes></notes>
         </div>
     </section>
-    
+
 
     <!-- Vendor JS Files -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
