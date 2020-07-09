@@ -40,7 +40,6 @@ button{
     border-radius: 8px;
     max-width: 600px;
     margin: 30px auto;
-    margin: bottom;
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.2);
     overflow: hidden;
     background-color: white;
@@ -79,6 +78,43 @@ button{
 .nn-footer .nn-close-button:hover{
     color: black;
     background-color: #E0E0E0;
+}
+
+/* New tasks */
+.new-tasks{
+    border: 1px #E0E0E0 solid;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 30px auto;
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.2);
+    overflow: hidden;
+    background-color: white;
+}
+.new-tasks .title{
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    padding: 10px 15px;
+    width: 100%;
+    border: none;
+    outline: none;
+}
+.new-tasks .tasks-wrapper{
+    padding: 12px 16px 30px;
+}
+.new-tasks .tasks-wrapper input{
+    font-size: 0.875rem !important;
+    font-weight: 400 !important;
+    display: inline;
+    border: none;
+    outline: none;
+}
+.new-tasks .tasks-wrapper .task-name{
+    width: 95%;
+}
+.new-tasks .nn-footer{
+    padding: 12px;
+    display: flex;
+    justify-content: flex-end;
 }
 /* Notes */
 .container{

@@ -10,7 +10,9 @@ Vue.component('notes', {
     template: `
         <div class="container">
             <h1>Notes</h1>
-            <new-note @create-note="createNote"></new-note>
+            <button class="btn btn-primary" @click="toggleTasks">Toggle Tasks</button>
+            <new-note v-if="!tasks" @create-note="createNote"></new-note>
+            <new-tasks v-if="tasks"></new-tasks>
             <div class="notes">
                 <p v-if="!notes.length" class="no-notes">Notes you add appear here</p>
                 <div v-if="notes.length" class="row">
@@ -22,7 +24,7 @@ Vue.component('notes', {
     data() {
         return {
             notes: [],
-            currentNote: null
+            tasks: false
         }
     },
     mounted(){
@@ -31,19 +33,28 @@ Vue.component('notes', {
                 this.notes.push({
                     id: note.child('id').val(),
                     title: note.child('title').val(),
-                    contents: note.child('contents').val()
+                    contents: note.child('contents').val(),
+                    tasks: note.child('tasks').val()
                 })
             })
         })
     },
     methods: {
+        toggleTasks(){
+            if (this.tasks === false){
+                this.tasks = true;
+                return
+            }
+            this.tasks = false
+        },
         createNote(info) {
-            const newNote = { title: info.title, contents: info.contents, id: info.id };
+            const newNote = { title: info.title, contents: info.contents, id: info.id, tasks: false };
             this.notes.push(newNote);
             firebase.database().ref(info.id).set({
                 title: info.title,
                 contents: info.contents,
-                id: info.id
+                id: info.id,
+                tasks: false
             });
         },
         deleteNote(info) {
@@ -125,7 +136,8 @@ Vue.component('new-note', {
             note: {
                 title: "",
                 contents: "",
-                id: 'n' + uuidv4()
+                id: 'n' + uuidv4(),
+                tasks: false
             },
             editingTitle: false,
             editingNote: false
@@ -138,6 +150,54 @@ Vue.component('new-note', {
                 this.note.title = ""
                 this.note.contents = ""
                 this.note.id = 'n' + uuidv4()
+                this.note.tasks = false
+            }
+        }
+    }
+})
+
+/* <textarea v-model="tasks.contents" @mousedown="editingTasks=true" @blur="editingTasks=false; newTasks()"
+v-bind:style="[(!editingTasks && !editingTitle) ? {'font-size': '1rem !important', 'font-weight': '600 !important'} : {'font-size': '0.875rem !important', 'font-weight': '400 !important'}]"
+placeholder="Take a note..."></textarea> */
+
+Vue.component('new-tasks', {
+    template: `
+        <div class="new-tasks">
+            <input class="title" v-model="tasks.title" @mousedown="editingTitle=true" @blur="editingTitle=false" placeholder="Title">
+            <div class="tasks-wrapper" v-for="task in tasks.contents" @mousedown="editingTasks=true">
+                <input class="checkbox" type="checkbox" v-model="task.completed" @mousedown="editingTasks=true">
+                <input class="task-name" v-model="task.taskName" @mousedown="editingTasks=true" @blur="editingTasks=false" :style="[(task.completed) ? {'text-decoration': 'line-through', 'color': '#80868B'} : {'text-decoration': 'none', 'color': 'black'}]" placeholder="Add a task...">
+            </div>
+            <div class="nn-footer">
+                <button class="nn-close-button" @click="editingTitle=false; editingTasks=false" v-if="(editingTasks || editingTitle)">Close</button>
+            </div>
+        </div>
+    `,
+    data() {
+        return {
+            tasks: {
+                title: "",
+                contents: [
+                    {
+                        completed: false,
+                        taskName: ""
+                    }
+                ],
+                id: 'n' + uuidv4(),
+                tasks: true
+            },
+            editingTitle: false,
+            editingTasks: false
+        }
+    },
+    methods: {
+        newTasks() {
+            if (!this.editingTitle && !this.editingTasks && (this.tasks.title || this.tasks.contents)) {
+                this.$emit('create-tasks', this.tasks)
+                this.tasks.title = ""
+                this.tasks.contents = ""
+                this.tasks.id = 'n' + uuidv4()
+                this.tasks.tasks = false
             }
         }
     }
@@ -145,10 +205,7 @@ Vue.component('new-note', {
 
 //Vue Instance
 var app = new Vue({
-    el: '#app',
-    data: {
-        notes: []
-    },
+    el: '#app'
 })
 
 
