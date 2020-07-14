@@ -1,4 +1,7 @@
-
+section{
+    background-color: #fafafa;
+    min-height: 100vh;
+}
 h1{
     text-align: center;
     margin: 0 !important;
@@ -99,23 +102,90 @@ button{
     outline: none;
 }
 .new-tasks .tasks-wrapper{
-    padding: 12px 16px 30px;
+    padding: 12px 5px 30px;
+    align-items: center;
 }
 .new-tasks .tasks-wrapper input{
     font-size: 0.875rem !important;
     font-weight: 400 !important;
-    display: inline;
+    display: inline-block;
     border: none;
     outline: none;
+    vertical-align: middle;
+}
+.task .checkbox{
+    display: inline-block;
+    vertical-align: middle;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.task .checkbox:hover{
+    background-color: #fafafc;
+}
+.checkbox .checkbox-icon{
+    border: #80868B 2px solid;
+    padding: 6px;
+    border-radius: 50%;
+}
+.checkbox .check{
+    height: 1rem;
+    width: 1rem;
+    font-size: 1rem;
+    color: #4285F4;
 }
 .new-tasks .tasks-wrapper .task-name{
-    width: 95%;
+    width: 85%;
+    padding: 12px 0;
+    border-bottom: #E0E0E0 1px solid;
+}
+.add-task{
+    width: 100%;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.1s linear;
+}
+.add-task:hover{
+    background-color: #f1f3f4;
+}
+.add-task .add-icon{
+    display: inline-block;
+    margin: 15px;
+    height: 1rem;
+    width: 1rem;
+    font-size: 1rem;
+    color: #4285F4;
+    vertical-align: middle;
+}
+.add-task p{
+    display: inline-block;
+    padding: 0;
+    vertical-align: middle;
+    color: #5F6368;
+}
+.add-task .add-icon .fa{
+    position: relative;
+    top: -3px;
+    left: 1.5px;
 }
 .new-tasks .nn-footer{
     padding: 12px;
     display: flex;
     justify-content: flex-end;
 }
+.nn-footer .delete-completed{
+    padding: 8px 24px;
+    color: #505558;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: all 0.2s linear;
+}
+.nn-footer .delete-completed:hover{
+    color: black;
+    background-color: #E0E0E0;
+}
+
 /* Notes */
 .container{
     padding: 100px 0;
@@ -129,6 +199,7 @@ button{
     border-radius: 8px;
     height: 100%;
     transition: all 0.1s linear;
+    background-color: white;
 }
 .note .note-wrapper:hover{
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.1);
@@ -147,6 +218,14 @@ button{
 }
 .note-wrapper button:hover{
     background-color: #e0e0e080;
+}
+
+.note-wrapper .tasks-wrapper p{
+    display: inline-block;
+    padding: 12px 0;
+}
+.note-wrapper .tasks-wrapper{
+    padding: 0 0 10px 5px !important;
 }
 
 /* Modal */
@@ -182,6 +261,14 @@ button{
     border: 0;
     position: relative;
 }
+.modal .modal-body input{
+    font-size: 16px !important;
+    padding: 12px 0;
+    width: 85%;
+}
+.modal .modal-body .task .task-name{
+    border-bottom: #E0E0E0 1px solid;
+}
 .modal textarea{
     font-size: 16px !important;
     padding: 4px 16px 12px;
@@ -207,6 +294,15 @@ button{
 }
 .footer .delete-button:hover{
     color: #505558;
+    background-color: #E0E0E0;
+}
+.footer .delete-completed{
+    float: right;
+    padding: 8px 24px;
+    color: #505558;
+}
+.footer .delete-completed:hover{
+    color: black;
     background-color: #E0E0E0;
 }
 .footer .close-button{
