@@ -37,6 +37,67 @@ button{
     text-align: center;
 }
 
+/* Logo Header */
+.logo-header{
+    margin: auto;
+    margin-bottom: 3rem;
+    width: fit-content;
+    height: 5rem;
+}
+.logo-header .logo{
+    margin: 0 2rem;
+    display: inline-block;
+    position: relative;
+    height: 100%;
+    cursor: pointer;
+}
+.logo-header img{
+    height: 100%;
+    transition: all 0.2s linear;
+}
+.logo-header .logo p{
+    padding: 0;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    opacity: 0;
+    transition: all 0.2s linear;
+}
+#keep:hover img{
+    transform: translateY(-1rem);
+}
+#vue:hover img{
+    transform: translateY(-1rem);
+}
+#tasks:hover img{
+    transform: translateY(-1rem);
+}
+#keep:hover p{
+    opacity: 1;
+}
+#vue:hover p{
+    opacity: 1;
+}
+#tasks:hover p{
+    opacity: 1;
+}
+.logo-header span{
+    vertical-align: middle;
+}
+@media (max-width: 575.98px) {
+    .logo-header{
+        margin: auto;
+        width: fit-content;
+        height: 3rem;
+    }
+    .logo-header .logo{
+        margin: 0 1rem;
+        display: inline;
+    }
+}
+
 /* New Note */
 .new-note{
     border: 1px #E0E0E0 solid;
@@ -102,7 +163,7 @@ button{
     outline: none;
 }
 .new-tasks .tasks-wrapper{
-    padding: 12px 5px 30px;
+    padding: 16px 5px 30px;
     align-items: center;
 }
 .new-tasks .tasks-wrapper input{

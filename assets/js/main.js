@@ -2,9 +2,22 @@
 Vue.component('notes', {
     template: `
         <div class="container">
-            <h1 v-if="!tasks">Notes</h1>
-            <h1 v-if="tasks">Tasks</h1>
-            <button class="btn btn-primary" @click="toggleTasks">Toggle Tasks</button>
+            <div class="logo-header">
+                <div class="logo" id="keep" @click="tasks=false">
+                    <img src="assets/images/google_keep.png" alt="Google Keep">
+                    <p :style="{'color': '#f3b342'}">Keep</p>
+                </div>
+                <span><i class="fa fa-plus"></i></span>
+                <div class="logo" id="vue" :style="{'cursor': 'unset'}">
+                    <img src="assets/images/Vue_and_Firebase.png" alt="Vue and Firebase">
+                    <p :style="[{'width': '200%'}, {'left': '-50%'}, {'bottom': '-30px'}, {'color': '#5BBF8B'}]">Made with Vue and Firebase</p>
+                </div>
+                <span><i class="fa fa-plus"></i></span>
+                <div class="logo" id="tasks" @click="tasks=true">
+                    <img src="assets/images/google_tasks.png" alt="Google Tasks">
+                    <p :style="{'color': '#417EEA'}">Tasks</p>
+                </div>
+            </div>
             <new-note v-if="!tasks" @create-note="createNote"></new-note>
             <new-tasks v-if="tasks" @create-tasks="createTasks"></new-tasks>
             <div class="notes">
@@ -35,13 +48,6 @@ Vue.component('notes', {
         })
     },
     methods: {
-        toggleTasks(){
-            if (this.tasks === false){
-                this.tasks = true;
-                return
-            }
-            this.tasks = false
-        },
         createNote(info) {
             const newNote = { title: info.title, contents: info.contents, id: info.id, tasks: false };
             this.notes.push(newNote);
@@ -242,7 +248,7 @@ Vue.component('new-tasks', {
     template: `
         <div class="new-tasks">
             <input v-if="(editingTasks || editingTitle)" class="title" v-model="tasks.title" @mousedown="editingTitle=true" placeholder="Title">
-            <div class="tasks-wrapper" @mousedown="editingTasks=true" :style="[!(editingTasks || editingTitle) ? {'padding-bottom': '12px'} : {'padding-bottom': '30px'}]">
+            <div class="tasks-wrapper" @mousedown="editingTasks=true" :style="[!(editingTasks || editingTitle) ? {'padding-bottom': '16px'} : {'padding-bottom': '30px'}]">
                 <div class="task" v-for="task in tasks.contents">
                     <div class="checkbox" @mouseenter="task.checkHovered=true" @mouseleave="task.checkHovered=false" @click="task.completed = !task.completed">
                         <div class="checkbox-icon" v-if="(!task.checkHovered && !task.completed)"></div>
